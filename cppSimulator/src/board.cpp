@@ -165,7 +165,7 @@ void board::set(uint8_t x, uint8_t y, Field f)
     }*/
 }
 
-void board::listNextMoves(Field turn, std::vector<std::pair<move, board>>& out) const
+void board::listNextMoves(Field turn, Board* outBoards, Move*) const
 {
     for (int x=0; x<W; x++)
     {
