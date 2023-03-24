@@ -1,0 +1,6 @@
+# ninja log v5
+3	2075	1648148152210482120	CMakeFiles/board.dir/src/minimax.cpp.o	c844401b0f5fa5d0
+0	110	0	/home/mauricio/Coding/probniRepo/build/CMakeFiles/cmake.verify_globs	1292a7381df2f054
+2733	3056	1648148153190493440	../bin/board	c20a53843e5ee1c
+2	2108	1648148152242482490	CMakeFiles/board.dir/src/board.cpp.o	74a7d66f4eaf20ff
+2	2733	1648148152866489698	CMakeFiles/board.dir/src/main.cpp.o	fa3c8187b0eaa70a
