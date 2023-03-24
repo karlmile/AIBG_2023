@@ -5,31 +5,44 @@
 #include <ostream>
 #include <inttypes.h>
 
-enum Field : uint8_t
+enum Figurica : uint8_t
 {
-    Empty,
-    Red,
-    Yellow
+    Kralj,
+    Dama,
+    Cigla,
+    Kamikaza,
+    Snajper,
+    Lovac,
+    Konj,
+    Top,
+    Pijan
 };
 
 enum PlayerID : uint8_t
 {
-    Red,
-    Yellow
+    A,
+    B
 };
 
-/*struct Move
-{
-    int columnSelected;
-};*/
+struct figura{
+    Figurica F;
+    int Position[2];
+    PlayerID player;
+    PlayerID board;
+};
 
 struct Move{
-
+    PlayerID board;
+    int index;
+    int Position[2];
 };
 
-struct Board
-{
-    void listNextMoves(PlayerID turn, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
+struct Board{
+    int A[12][12];
+    int B[12][12];
+    figura ALL[96];
+    Board potez(Board old, Move M);
+    void listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
     
 };
 
