@@ -516,7 +516,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                 if (pocetak){
                     if (ALL[j].x == -1){
                         for (int i2 = 0; i2 < 12; i2++){
-                            int i1 = (player == ploca)? 1:10;
+                            int i1 = (j < 48)? 1:10;
                             if ((*P)[i1][i2] == -1){
                                 Move M;
                                 M.board = ploca;
@@ -1145,7 +1145,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                         }
                         break;
                     case Pijan:
-                        if (player == ploca){
+                        if (j<48){
                             if(a==1){
                                 if(0 <= a+2 && a+2 <= 11 && 0 <= b+2 && b+2 <= 11 && (*P)[a+2][b+2] == -1){
                                     Move M;
