@@ -1,97 +1,83 @@
 #include "minimax.h"
 #include <limits>
+#include <memory>
 
-move minimax(const board& b, Field curPlayer, int maxDepth)
+Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int maxDepth, size_t maxMemory)
 {
-    std::vector<std::pair<move, board>> moves;
-    b.listNextMoves(curPlayer, moves);
+    /*
+    ply 0 - max
+    ply 1 - min
+    */
+    float dynScoreMultiplier = (curPlayer == PlayerID::A)? 1.0f : -1.0f;
+    PlayerID dynCurPlayer = curPlayer;
+    std::unique_ptr<Board[]> boardLayers[maxDepth];
+    std::unique_ptr<Move[]> moveLayers[maxDepth];
+    std::unique_ptr<float[]> scoreLayers[maxDepth];
+    std::unique_ptr<std::pair<size_t, size_t>[]> childRangeLayers[maxDepth];
+    size_t layerSizes[maxDepth];
+    
+    // starting move
+    boardLayers[0] = std::make_unique<Board[]>(1);
+    moveLayers[0] = std::make_unique<Move[]>(1);
+    scoreLayers[0] = std::make_unique<float[]>(1);
+    childRangeLayers[0] = std::make_unique<std::pair<size_t, size_t>[]>(1);
+    boardLayers[0][0] = b;
 
-    move choosenMove;
+    // generate moves
+    for (int nextD = 1; nextD < maxDepth; nextD++) {
+        int curD = nextD-1;
+        // switch 
+        dynCurPlayer = (dynCurPlayer == A)? B : A;
+        dynScoreMultiplier = -dynScoreMultiplier;
 
-    if (curPlayer == Field::Red)
-    {
-        int max = std::numeric_limits<int>::min();
-        
-        for (auto& moveBoard : moves)
-        {
-            int curMin = minVal(moveBoard.second, maxDepth, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
-            if (curMin > max)
-            {
-                choosenMove = moveBoard.first;
-                max = curMin;
+        // alloc
+        layerSizes[nextD] = layerSizes[curD]*230;
+        boardLayers[nextD] = std::make_unique<Board[]>(layerSizes[nextD]);
+        moveLayers[nextD] = std::make_unique<Move[]>(layerSizes[nextD]);
+        scoreLayers[nextD] = std::make_unique<float[]>(layerSizes[nextD]);
+        childRangeLayers[nextD] = std::make_unique<std::pair<size_t, size_t>[]>(nextD);
+
+        // list moves
+        size_t curLayerPos = 0;
+        for (int i=0; i<layerSizes[curD]; i++) {
+            childRangeLayers[curD][i].first = curLayerPos;
+            curLayerPos += boardLayers[curD][i].listNextMoves(
+                dynCurPlayer,
+                curBoard, boardLayers[nextD].get()+curLayerPos,
+                moveLayers[nextD].get()+curLayerPos,
+                layerSizes[nextD] - curLayerPos
+            );
+            childRangeLayers[curD][i].second = curLayerPos;
+        }
+    }
+
+    // evaluate deepest layer scores
+    for (int j=0; j<layerSizes[maxDepth-1]; j++) {
+        scoreLayers[maxDepth-1][j] = boardLayers[maxDepth-1][j].score();
+    }
+
+    // collect scores
+    for (int nextD = maxDepth-1; nextD > 1; nextD++) {
+        int curD = nextD-1;
+
+        // find scores
+        for (int i=0; i<layerSizes[curD]; i++) {
+            moveLayers[curD][i] = moveLayers[nextD][childRangeLayers[curD][i].first];
+            scoreLayers[curD][i] = scoreLayers[nextD][childRangeLayers[curD][i].first];
+            for (int j=childRangeLayers[curD][i].first+1; j<childRangeLayers[curD][i].second; j++) {
+                float s = scoreLayers[nextD][j];
+                if (s*dynScoreMultiplier > scoreLayers[curD][i]*dynScoreMultiplier) {
+                    scoreLayers[curD][i] = s;
+                    moveLayers[curD][i] = moveLayers[nextD][j];
+                }
             }
         }
-    }
-    else
-    {
-        int min = std::numeric_limits<int>::max();
         
-        for (auto& moveBoard : moves)
-        {
-            int curMax = maxVal(moveBoard.second, maxDepth, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
-            if (curMax < min)
-            {
-                choosenMove = moveBoard.first;
-                min = curMax;
-            }
-        }
+
+        // switch 
+        dynCurPlayer = (dynCurPlayer == A)? B : A;
+        dynScoreMultiplier = -dynScoreMultiplier;
     }
 
-    return choosenMove;
-}
-
-// Red is max
-int maxVal(const board& b, int depthLeft, int alpha, int beta)
-{
-    if (depthLeft == 0 || b.isFinished())
-        return b.score();
-
-    std::vector<std::pair<move, board>> moves;
-    int max = std::numeric_limits<int>::min();
-
-    b.listNextMoves(Field::Red, moves);
-    for (auto& moveBoard : moves)
-    {
-        int curMin = minVal(moveBoard.second, depthLeft-1, max, beta);
-        if (curMin > max)
-        {
-            max = curMin;
-            if (max >= beta) return beta;
-        }
-    }
-
-    if (moves.size() == 0 || max == std::numeric_limits<int>::min())
-    {
-        int a = 0;
-    }
-
-    return max;
-}
-
-// Yellow is min
-int minVal(const board& b, int depthLeft, int alpha, int beta)
-{
-    if (depthLeft == 0 || b.isFinished())
-        return b.score();
-
-    std::vector<std::pair<move, board>> moves;
-    int min = std::numeric_limits<int>::max();
-
-    b.listNextMoves(Field::Yellow, moves);
-    for (auto& moveBoard : moves)
-    {
-        int curMax = maxVal(moveBoard.second, depthLeft-1, alpha, min);
-        if (curMax < min)
-        {
-            min = curMax;
-            if (min <= alpha) return alpha;
-        }
-    }
-
-    if (moves.size() == 0 || min == std::numeric_limits<int>::max())
-    {
-        int a = 0;
-    }
-
-    return min;
+    return moveLayers[0][0];
 }

@@ -48,6 +48,7 @@ const int MAX_POTEZA = 230;
 struct Board{
     int boards[2][12][12];
     figura ALL[96];
+    float score() const;
     Board potez(Board old, Move M) const;
     int listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
 };

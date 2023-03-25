@@ -12,6 +12,11 @@ const std::map<char, Figurica> CharFiguricaMap = {
     {'S', Snajper}
 };
 
+float Board::score() const
+{
+    
+}
+
 
 Board Board::potez(Board X, Move M) const{
     //definiram ko sm mi a ko suprotni
