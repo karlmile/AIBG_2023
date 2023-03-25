@@ -12,9 +12,49 @@ const std::map<char, Figurica> CharFiguricaMap = {
     {'S', Snajper}
 };
 
-float Board::score() const
-{
-    
+float Board::score(PlayerID ploca , PlayerID player) const{
+    double score = 0;
+
+    for (int i=0; i<96; i++){
+        if (ALL[i].F == Kralj && ALL[i].x == -1){
+            return (ALL[i].player == player) ? 0 : 1;
+        }
+
+        if (ALL[i].player == player){
+            switch (ALL[i].F)
+            {
+            case Pijan:
+                score += 10;
+                break;
+            case Cigla:
+                score += 15;
+                break;
+            case Dama:
+                score += 45;
+                break;
+            case Kamikaza:
+                if (ALL[i].x != -2)
+                    score += 30;
+                break;
+            case Konj:
+                score += 25;
+                break;
+            case Lovac:
+                score += 15;
+                break;
+            case Top:
+                score += 35;
+                break;
+            case Snajper:
+                score += 25;
+                break;
+            }
+        }
+    }
+
+    score /= 430.0;
+
+    return score;
 }
 
 
