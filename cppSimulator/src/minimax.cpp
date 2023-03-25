@@ -1,6 +1,7 @@
 #include "minimax.h"
 #include <limits>
 #include <memory>
+#include <iostream>
 
 Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int maxDepth, size_t maxMemory, bool pocetak)
 {
@@ -26,6 +27,7 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
 
     // generate moves
     for (int nextD = 1; nextD < maxDepth; nextD++) {
+        //std::cerr << "nextD" << nextD << " ";
         int curD = nextD-1;
         // switch 
         dynCurPlayer = (dynCurPlayer == A)? B : A;
@@ -54,14 +56,16 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
         }
         layerSizes[nextD] = curLayerPos;
     }
+    //std::cerr << "NEXT" << std::endl;
 
     // evaluate deepest layer scores
     for (int j=0; j<layerSizes[maxDepth-1]; j++) {
         scoreLayers[maxDepth-1][j] = boardLayers[maxDepth-1][j].score(A, A);
     }
 
-    // collect scores
-    for (int nextD = maxDepth-1; nextD >= 1; nextD++) {
+    // collect scores 
+    for (int nextD = maxDepth-1; nextD >= 1; nextD--) {
+        //std::cerr << "nextD" << nextD << " ";
         int curD = nextD-1;
 
         // find scores
@@ -82,6 +86,7 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
         dynCurPlayer = (dynCurPlayer == A)? B : A;
         dynScoreMultiplier = -dynScoreMultiplier;
     }
+    //std::cerr << "NEXT" << std::endl;
 
     return moveLayers[0][0];
 }

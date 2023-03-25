@@ -43,7 +43,6 @@ int main()
             int num;
 
             // potez
-            std::cerr << "Setting moves" << std::endl;
             lineSS >> num;
             curPlayer = (PlayerID)num;
             lineSS >> num;
@@ -52,8 +51,6 @@ int main()
             lineSS >> phase;
             pocetak = (phase == 1);
 
-            std::cerr << "Pocetak: " << pocetak << std::endl;
-
             // figureposs
             for (int i=0; i<96; i++) {
                 currentState.ALL[i].x = -1;
@@ -61,7 +58,6 @@ int main()
             }
 
             // board
-            std::cerr << "Setting board" << std::endl;
             for (int b: {0,1}) {
                 for (int y=0; y<12; y++) {
                     for (int x=0; x<12; x++) {
@@ -77,7 +73,6 @@ int main()
             }
 
             // figures
-            std::cerr << "Setting figures" << std::endl;
             for (int i=0; i<96; i++) {
                 char type, plocaC, vlasnikC;
                 lineSS >> type;
@@ -89,8 +84,6 @@ int main()
                     currentState.ALL[i].board = (PlayerID)(plocaC - '0');
                 }
             }
-
-            std::cerr << "Set board" << std::endl;
         }
         else if (comm == "minimax")
         {

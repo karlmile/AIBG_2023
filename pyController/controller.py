@@ -156,7 +156,7 @@ def main():
 
     # read params
     adminToken: str|None = None
-    url = "http://localhost:8080"
+    url = "http://localhost:8081"
     gameId: int|None = None
     playerInds = [0, 1]
     playerNames = ["player1", "player2"]
@@ -245,7 +245,7 @@ def main():
                 print(f"Enter move (P-FigType-newX-newY)")
                 moveServerStr = input()
         elif playerControllers[gameState.turn] == "bot":
-            print(f"AI seeking for moves for '{str(gameState)}'...")
+            print(f"AI seeking for moves...")
             simulatorProc.stdin.write(f"set {str(gameState)}\n".encode("utf-8"))
             simulatorProc.stdin.write(f"minimax\n".encode("utf-8"))
             simulatorProc.stdin.flush()
