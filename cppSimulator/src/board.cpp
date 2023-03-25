@@ -1004,45 +1004,61 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                         }
                         break;
                     case Snajper:
-                        if (0 <= a+2 && a+2 <= 11 && 0 <= b && b <= 11 && ((*P)[a+2][b] ==-1 || (ALL[(*P)[a+2][b]].player != player && ALL[(*P)[a+2][b]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a+2;
-                            M.y = b;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a+2 && a+2 <= 11 && 0 <= b && b <= 11 && ALL[(*P)[a+2][b]].F != Cigla){
+                            if ((*P)[a+1][b] == -1){
+                                if ((*P)[a+2][b] == -1 || ALL[(*P)[a+2][b]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a+2;
+                                    M.y = b;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
-                        if (0 <= a-2 && a-2 <= 11 && 0 <= b && b <= 11 && ((*P)[a-2][b] ==-1 || (ALL[(*P)[a-2][b]].player != player && ALL[(*P)[a-2][b]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a-2;
-                            M.y = b;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a-2 && a-2 <= 11 && 0 <= b && b <= 11 && ALL[(*P)[a-2][b]].F != Cigla){
+                            if ((*P)[a-1][b] == -1){
+                                if ((*P)[a-2][b] == -1 || ALL[(*P)[a-2][b]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a-2;
+                                    M.y = b;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
-                        if (0 <= a && a <= 11 && 0 <= b-2 && b-2 <= 11 && ((*P)[a][b-2] ==-1 || (ALL[(*P)[a][b-2]].player != player && ALL[(*P)[a][b-2]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a;
-                            M.y = b-2;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a && a <= 11 && 0 <= b+2 && b+2 <= 11 && ALL[(*P)[a][b+2]].F != Cigla){
+                            if ((*P)[a][b+1] == -1){
+                                if ((*P)[a][b+2] == -1 || ALL[(*P)[a][b+2]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a;
+                                    M.y = b+2;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
-                        if (0 <= a && a <= 11 && 0 <= b+2 && b+2 <= 11 && ((*P)[a][b+2] ==-1 || (ALL[(*P)[a][b+2]].player != player && ALL[(*P)[a][b+2]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a;
-                            M.y = b+2;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a && a <= 11 && 0 <= b-2 && b-2 <= 11 && ALL[(*P)[a][b-2]].F != Cigla){
+                            if ((*P)[a][b-1] == -1){
+                                if ((*P)[a][b-2] == -1 || ALL[(*P)[a][b-2]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a;
+                                    M.y = b-2;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
                         break;
                     case Pijan:
