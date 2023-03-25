@@ -520,7 +520,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                         }
                     }
@@ -538,7 +538,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                         }
                     }
@@ -558,7 +558,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a > 0 && ((*P)[a-1][b] == -1 || (ALL[(*P)[a-1][b]].F != Cigla && ALL[(*P)[a-1][b]].player != player))){
                             Move M;
@@ -568,7 +568,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a > 0 && b < 11 && ((*P)[a-1][b+1] == -1 || (ALL[(*P)[a-1][b+1]].F != Cigla && ALL[(*P)[a-1][b+1]].player != player))){
                             Move M;
@@ -578,7 +578,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a < 11 && b > 0 && ((*P)[a+1][b-1] == -1 || (ALL[(*P)[a+1][b-1]].F != Cigla && ALL[(*P)[a+1][b-1]].player != player))){
                             Move M;
@@ -588,7 +588,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a < 11 && ((*P)[a+1][b] == -1 || (ALL[(*P)[a+1][b]].F != Cigla && ALL[(*P)[a+1][b]].player != player))){
                             Move M;
@@ -598,7 +598,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a < 11 && b < 11 && ((*P)[a+1][b+1] == -1 || (ALL[(*P)[a+1][b+1]].F != Cigla && ALL[(*P)[a+1][b+1]].player != player))){
                             Move M;
@@ -608,7 +608,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (b > 0 && ((*P)[a][b-1] == -1 || (ALL[(*P)[a][b-1]].F != Cigla && ALL[(*P)[a][b-1]].player != player))){
                             Move M;
@@ -618,7 +618,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (b < 11 && ((*P)[a][b+1] == -1 || (ALL[(*P)[a][b+1]].F != Cigla && ALL[(*P)[a][b+1]].player != player))){
                             Move M;
@@ -628,7 +628,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         break;
                     case Dama:
@@ -643,7 +643,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -658,7 +658,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -673,7 +673,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -688,7 +688,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -703,7 +703,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -718,7 +718,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -733,7 +733,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -748,7 +748,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         int a = ALL[j].x;
                         int b = ALL[j].y;
@@ -762,7 +762,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a+1][b+1]].player != player){break;}
                             a++; b++;
                         }
@@ -776,7 +776,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a+1][b-1]].player != player){break;}
                             a++; b--;
                         }
@@ -790,7 +790,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a-1][b+1]].player != player){break;}
                             a--; b++;
                         }
@@ -804,7 +804,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a-1][b--]].player != player){break;}
                             a--; b--;
                         }
@@ -820,7 +820,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a-1 && a-1 <= 11 && 0 <= b+3 && b+3 <= 11 && ((*P)[a-1][b+3] == -1 || (ALL[(*P)[a-1][b+3]].F != Cigla && ALL[(*P)[a-1][b+3]].player != player))){
                             Move M;
@@ -830,7 +830,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a+1 && a+1 <= 11 && 0 <= b-3 && b-3 <= 11 && ((*P)[a+1][b-3] == -1 || (ALL[(*P)[a+1][b-3]].F != Cigla && ALL[(*P)[a+1][b-3]].player != player))){
                             Move M;
@@ -840,7 +840,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a-1 && a-1 <= 11 && 0 <= b-3 && b-3 <= 11 && ((*P)[a-1][b-3] == -1 || (ALL[(*P)[a-1][b-3]].F != Cigla && ALL[(*P)[a-1][b-3]].player != player))){
                             Move M;
@@ -850,7 +850,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a+3 && a+3 <= 11 && 0 <= b+1 && b+1 <= 11 && ((*P)[a+3][b+1] == -1 || (ALL[(*P)[a+3][b+1]].F != Cigla && ALL[(*P)[a+3][b+1]].player != player))){
                             Move M;
@@ -860,7 +860,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a-3 && a-3 <= 11 && 0 <= b+1 && b+1 <= 11 && ((*P)[a-3][b+1] == -1 || (ALL[(*P)[a-3][b+1]].F != Cigla && ALL[(*P)[a-3][b+1]].player != player))){
                             Move M;
@@ -870,7 +870,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a+3 && a+3 <= 11 && 0 <= b-1 && b-1 <= 11 && ((*P)[a+3][b-1] == -1 || (ALL[(*P)[a+3][b-1]].F != Cigla && ALL[(*P)[a+3][b-1]].player != player))){
                             Move M;
@@ -880,7 +880,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         if (0 <= a-3 && a-3 <= 11 && 0 <= b-1 && b-1 <= 11 && ((*P)[a-3][b-1] == -1 || (ALL[(*P)[a-3][b-1]].F != Cigla && ALL[(*P)[a-3][b-1]].player != player))){
                             Move M;
@@ -890,7 +890,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;                            
+                            i++;  if (i >= maxOutputs) return i;                            
                         }
                         break;
                     case Top:
@@ -902,7 +902,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a-1][b]].player != player){break;}
                             a--;
                         }
@@ -916,7 +916,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a+1][b]].player != player){break;}
                             a++;
                         }
@@ -930,7 +930,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a][b-1]].player != player){break;}
                             b--;
                         }
@@ -944,7 +944,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                             if (ALL[(*P)[a][b+1]].player != player){break;}
                             b++;
                         }
@@ -960,7 +960,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a > 0 && (*P)[a-1][b] == -1){
                             Move M;
@@ -970,7 +970,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a > 0 && b < 11 && (*P)[a-1][b+1] == -1){
                             Move M;
@@ -980,7 +980,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a < 11 && b > 0 && (*P)[a+1][b-1] == -1){
                             Move M;
@@ -990,7 +990,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a < 11 && (*P)[a+1][b] == -1){
                             Move M;
@@ -1000,7 +1000,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (a < 11 && b < 11 && (*P)[a+1][b+1] == -1){
                             Move M;
@@ -1010,7 +1010,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (b > 0 && (*P)[a][b-1] == -1){
                             Move M;
@@ -1020,7 +1020,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (b < 11 && (*P)[a][b+1] == -1){
                             Move M;
@@ -1030,7 +1030,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         break;
                     case Kamikaza:
@@ -1042,7 +1042,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (0 <= a-2 && a-2 <= 11 && 0 <= b+2 && b+2 <= 11 && ((*P)[a-2][b+2] ==-1 || (ALL[(*P)[a-2][b+2]].player != player && ALL[(*P)[a-2][b+2]].F != Cigla))){
                             Move M;
@@ -1052,7 +1052,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (0 <= a+2 && a+2 <= 11 && 0 <= b-2 && b-2 <= 11 && ((*P)[a+2][b-2] ==-1 || (ALL[(*P)[a+2][b-2]].player != player && ALL[(*P)[a+2][b-2]].F != Cigla))){
                             Move M;
@@ -1062,7 +1062,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         if (0 <= a-2 && a-2 <= 11 && 0 <= b-2 && b-2 <= 11 && ((*P)[a-2][b-2] ==-1 || (ALL[(*P)[a-2][b-2]].player != player && ALL[(*P)[a-2][b-2]].F != Cigla))){
                             Move M;
@@ -1072,7 +1072,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             M.index = j;
                             outMoves[i] = M;
                             outBoards[i] = potez(*this, M);
-                            i++;
+                            i++;  if (i >= maxOutputs) return i;
                         }
                         break;
                     case Snajper:
@@ -1086,7 +1086,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                             }
                         }
@@ -1100,7 +1100,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                             }
                         }
@@ -1114,7 +1114,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                             }
                         }
@@ -1128,7 +1128,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                             }
                         }
@@ -1144,7 +1144,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                                 if(0 <= a+2 && a+2 <= 11 && 0 <= b-2 && b-2 <= 11 && (*P)[a+2][b-2] == -1){
                                     Move M;
@@ -1154,7 +1154,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                             }
                             if (0 <= a+1 && a+1 <= 11 && 0 <= b+1 && b+1 <= 11 && (*P)[a+1][b+1] == -1){
@@ -1165,7 +1165,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                             if (0 <= a+1 && a+1 <= 11 && 0 <= b-1 && b-1 <= 11 && (*P)[a+1][b-1] == -1){
                                 Move M;
@@ -1175,7 +1175,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                             if (0<=a+1 && a+1 <= 11 && (ALL[(*P)[a+1][b]].player != player && ALL[(*P)[a+1][b]].F != Cigla)){
                                 Move M;
@@ -1185,7 +1185,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                         }
                         else{
@@ -1198,7 +1198,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                                 if(0 <= a-2 && a-2 <= 11 && 0 <= b-2 && b-2 <= 11 && (*P)[a-2][b-2] == -1){
                                     Move M;
@@ -1208,7 +1208,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                     M.index = j;
                                     outMoves[i] = M;
                                     outBoards[i] = potez(*this, M);
-                                    i++;
+                                    i++;  if (i >= maxOutputs) return i;
                                 }
                             }
                             if (0 <= a-1 && a-1 <= 11 && 0 <= b+1 && b+1 <= 11 && (*P)[a-1][b+1] == -1){
@@ -1219,7 +1219,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                             if (0 <= a-1 && a-1 <= 11 && 0 <= b-1 && b-1 <= 11 && (*P)[a-1][b-1] == -1){
                                 Move M;
@@ -1229,7 +1229,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i;
                             }
                             if (0<=a-1 && a-1 <= 11 && (ALL[(*P)[a-1][b]].player != player && ALL[(*P)[a-1][b]].F != Cigla)){
                                 Move M;
@@ -1239,7 +1239,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                                 M.index = j;
                                 outMoves[i] = M;
                                 outBoards[i] = potez(*this, M);
-                                i++;
+                                i++;  if (i >= maxOutputs) return i; if (i >= maxOutputs) return i;
                             }
                         }
                         break;
