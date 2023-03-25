@@ -42,13 +42,13 @@ struct Move{
     int y;
 };
 
+const int EMPTY_FIELD = -1;
+
 struct Board{
     int boards[2][12][12];
-    const int empty = -1;
     figura ALL[96];
     Board potez(Board old, Move M) const;
     void listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
-    
 };
 
 std::ostream& operator << (std::ostream& o, const Board& b);
