@@ -44,9 +44,11 @@ int main()
 
             // figures
             for (int i=0; i<96; i++) {
-                std::string type;
+                char type;
                 std::cin >> type;
-                currentState.ALL[i].F = CharFiguricaMap.at(type[0]);
+                if (type != '-') {
+                    currentState.ALL[i].F = CharFiguricaMap.at(type);
+                }
             }
         }
         else if (comm == "minimax")
