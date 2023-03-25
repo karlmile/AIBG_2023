@@ -1,0 +1,868 @@
+{
+    "player1": "player2",
+    "player2": "player1",
+    "gameState": {
+        "boardState1": {
+            "board": [
+                [
+                    {
+                        "oznaka": "K",
+                        "id": 0,
+                        "black": false
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    {
+                        "oznaka": "P",
+                        "id": 0,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 1,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 2,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 3,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 4,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 5,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 6,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 7,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 8,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 9,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 10,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 11,
+                        "black": false
+                    }
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    {
+                        "oznaka": "P",
+                        "id": 12,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 13,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 14,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 15,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 16,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 17,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 18,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 19,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 20,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 21,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 22,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 23,
+                        "black": true
+                    }
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+            ],
+            "whitePiecesPlacement": [
+                null,
+                {
+                    "oznaka": "C",
+                    "id": 0,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "D",
+                    "id": 0,
+                    "black": false
+                },
+                {
+                    "oznaka": "J",
+                    "id": 0,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "N",
+                    "id": 0,
+                    "black": false
+                },
+                {
+                    "oznaka": "N",
+                    "id": 1,
+                    "black": false
+                },
+                {
+                    "oznaka": "L",
+                    "id": 0,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "T",
+                    "id": 0,
+                    "black": false
+                },
+                {
+                    "oznaka": "T",
+                    "id": 1,
+                    "black": false
+                },
+                {
+                    "oznaka": "D",
+                    "id": 1,
+                    "black": false
+                },
+                {
+                    "oznaka": "L",
+                    "id": 1,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "S",
+                    "id": 0,
+                    "black": false
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "whitePijanPlacement": [],
+            "blackPiecesPlacement": [
+                {
+                    "oznaka": "K",
+                    "id": 1,
+                    "black": true
+                },
+                {
+                    "oznaka": "C",
+                    "id": 1,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "D",
+                    "id": 2,
+                    "black": true
+                },
+                {
+                    "oznaka": "J",
+                    "id": 1,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "N",
+                    "id": 2,
+                    "black": true
+                },
+                {
+                    "oznaka": "N",
+                    "id": 3,
+                    "black": true
+                },
+                {
+                    "oznaka": "L",
+                    "id": 2,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "T",
+                    "id": 2,
+                    "black": true
+                },
+                {
+                    "oznaka": "T",
+                    "id": 3,
+                    "black": true
+                },
+                {
+                    "oznaka": "D",
+                    "id": 3,
+                    "black": true
+                },
+                {
+                    "oznaka": "L",
+                    "id": 3,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "S",
+                    "id": 1,
+                    "black": true
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "blackPijanPlacement": [],
+            "whiteMoves": false,
+            "phase": 1,
+            "cnt": 1,
+            "dim": 12
+        },
+        "boardState2": {
+            "board": [
+                [
+                    {
+                        "oznaka": "K",
+                        "id": 2,
+                        "black": false
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    {
+                        "oznaka": "P",
+                        "id": 24,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 25,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 26,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 27,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 28,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 29,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 30,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 31,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 32,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 33,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 34,
+                        "black": false
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 35,
+                        "black": false
+                    }
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                [
+                    {
+                        "oznaka": "P",
+                        "id": 36,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 37,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 38,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 39,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 40,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 41,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 42,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 43,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 44,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 45,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 46,
+                        "black": true
+                    },
+                    {
+                        "oznaka": "P",
+                        "id": 47,
+                        "black": true
+                    }
+                ],
+                [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+            ],
+            "whitePiecesPlacement": [
+                null,
+                {
+                    "oznaka": "C",
+                    "id": 2,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "D",
+                    "id": 4,
+                    "black": false
+                },
+                {
+                    "oznaka": "J",
+                    "id": 2,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "N",
+                    "id": 4,
+                    "black": false
+                },
+                {
+                    "oznaka": "N",
+                    "id": 5,
+                    "black": false
+                },
+                {
+                    "oznaka": "L",
+                    "id": 4,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "T",
+                    "id": 4,
+                    "black": false
+                },
+                {
+                    "oznaka": "T",
+                    "id": 5,
+                    "black": false
+                },
+                {
+                    "oznaka": "D",
+                    "id": 5,
+                    "black": false
+                },
+                {
+                    "oznaka": "L",
+                    "id": 5,
+                    "dim": 12,
+                    "black": false
+                },
+                {
+                    "oznaka": "S",
+                    "id": 2,
+                    "black": false
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "whitePijanPlacement": [],
+            "blackPiecesPlacement": [
+                {
+                    "oznaka": "K",
+                    "id": 3,
+                    "black": true
+                },
+                {
+                    "oznaka": "C",
+                    "id": 3,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "D",
+                    "id": 6,
+                    "black": true
+                },
+                {
+                    "oznaka": "J",
+                    "id": 3,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "N",
+                    "id": 6,
+                    "black": true
+                },
+                {
+                    "oznaka": "N",
+                    "id": 7,
+                    "black": true
+                },
+                {
+                    "oznaka": "L",
+                    "id": 6,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "T",
+                    "id": 6,
+                    "black": true
+                },
+                {
+                    "oznaka": "T",
+                    "id": 7,
+                    "black": true
+                },
+                {
+                    "oznaka": "D",
+                    "id": 7,
+                    "black": true
+                },
+                {
+                    "oznaka": "L",
+                    "id": 7,
+                    "dim": 12,
+                    "black": true
+                },
+                {
+                    "oznaka": "S",
+                    "id": 3,
+                    "black": true
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "blackPijanPlacement": [],
+            "whiteMoves": false,
+            "phase": 1,
+            "cnt": 1,
+            "dim": 12
+        },
+        "status": "Draw",
+        "illegalMoveCounter": 0
+    }
+}
