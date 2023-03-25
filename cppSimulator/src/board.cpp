@@ -1,4 +1,5 @@
 #include "board.h"
+#include <iostream>
 
 const std::map<char, Figurica> CharFiguricaMap = {
     {'K', Kralj},
