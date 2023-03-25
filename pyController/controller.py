@@ -73,6 +73,7 @@ class Board:
     def __init__(self, jsonState: any, whiteFigs, blackFigs, ploca, whiteVlasnik1: bool) -> None:
         self.whiteFigs: list[int] = whiteFigs
         self.blackFigs: list[int] = blackFigs
+        self.phase = jsonState["phase"]
 
         self.fields = [
             [
@@ -120,12 +121,13 @@ class GameState:
         self.board2 = Board(jsonState["boardState2"], self.whiteFigs, self.blackFigs, 1, not whiteOnBoard1)
         self.turn = myPlyInd if jsonState["boardState1"]["whiteMoves"] == whiteOnBoard1 or jsonState["boardState2"]["whiteMoves"] != whiteOnBoard1 else enemyPlyInd
         self.boardTurn = 0 if (jsonState["boardState1"]["whiteMoves"] and whiteOnBoard1) or (not jsonState["boardState2"]["whiteMoves"] and not whiteOnBoard1) else 1
-        self.phase = jsonState["boardState1"]["phase"]
+        #self.phase = jsonState["boardState1"]["phase"]
         self.numInvalid = jsonState["illegalMoveCounter"]
         pass
 
     def __str__(self) -> str:
-        boardIndsStr = " ".join([str(ind) for board in [self.board1, self.board2] for line in board.fields for ind in line])
+        boards = [self.board1, self.board2] 
+        boardIndsStr = " ".join([str(ind) for board in boards for line in board.fields for ind in line])
         figureLettersStr = ""
         for fig in self.whiteFigs:
             figureLettersStr += fig.vrsta
@@ -143,7 +145,7 @@ class GameState:
             figureLettersStr += "-"
             figureLettersStr += "."
             figureLettersStr += "."
-        return f"{self.turn} {self.boardTurn} {boardIndsStr} {figureLettersStr}"
+        return f"{self.turn} {self.boardTurn} {boards[self.boardTurn].phase} {boardIndsStr} {figureLettersStr}"
 
 
 

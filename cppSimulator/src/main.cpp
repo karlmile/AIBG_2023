@@ -10,9 +10,10 @@ int main()
 {
     bool enableDebug = false;
     Board currentState;
+    bool pocetak;
     PlayerID curPlayer = PlayerID::A;
     PlayerID curBoard = PlayerID::A;
-    int maxDepth = 3;
+    int maxDepth = 2;
     size_t maxMemory = 1000000;
 
     if (enableDebug) {
@@ -23,7 +24,7 @@ int main()
     bool running = true;
     while (running)
     {
-        if (enableDebug || true) {
+        if (enableDebug) {
             std::cerr << "??? set (board state); depth (d); minimax; end;" << std::endl;
         }
         std::string line;
@@ -33,7 +34,9 @@ int main()
         std::string comm;
         lineSS >> comm;
 
-        std::cerr << "Recved line '" << line << "', command '" << comm << std::endl;
+        if (enableDebug) {
+            std::cerr << "Recved line '" << line << "', command '" << comm << std::endl;
+        }
 
         if (comm == "set")
         {
@@ -45,6 +48,11 @@ int main()
             curPlayer = (PlayerID)num;
             lineSS >> num;
             curBoard = (PlayerID)num;
+            int phase;
+            lineSS >> phase;
+            pocetak = (phase == 1);
+
+            std::cerr << "Pocetak: " << pocetak << std::endl;
 
             // figureposs
             for (int i=0; i<96; i++) {
@@ -87,7 +95,7 @@ int main()
         else if (comm == "minimax")
         {
             auto start = std::chrono::high_resolution_clock::now();
-            Move mov = broadMinimax(currentState, curPlayer, curBoard, maxDepth, maxMemory);
+            Move mov = broadMinimax(currentState, curPlayer, curBoard, maxDepth, maxMemory, pocetak);
             auto end = std::chrono::high_resolution_clock::now();
 
             if (currentState.ALL[mov.index].x == -1) {

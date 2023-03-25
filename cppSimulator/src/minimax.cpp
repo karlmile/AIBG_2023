@@ -2,7 +2,7 @@
 #include <limits>
 #include <memory>
 
-Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int maxDepth, size_t maxMemory)
+Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int maxDepth, size_t maxMemory, bool pocetak)
 {
     /*
     ply 0 - max
@@ -48,10 +48,11 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
                 boardLayers[nextD].get()+curLayerPos,
                 moveLayers[nextD].get()+curLayerPos,
                 layerSizes[nextD] - curLayerPos,
-                false
+                pocetak
             );
             childRangeLayers[curD][i].second = curLayerPos;
         }
+        layerSizes[curD] = curLayerPos;
     }
 
     // evaluate deepest layer scores

@@ -44,7 +44,7 @@ struct Move{
 };
 
 const int EMPTY_FIELD = -1;
-const int MAX_POTEZA = 230;
+const int MAX_POTEZA = 1470;
 
 struct Board{
     int boards[2][12][12];
