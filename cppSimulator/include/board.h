@@ -42,7 +42,7 @@ struct Move{
 struct Board{
     int boards[2][12][12];
     figura ALL[96];
-    Board potez(Board old, Move M);
+    Board potez(Board old, Move M) const;
     void listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
     
 };
