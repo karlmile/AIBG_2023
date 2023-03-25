@@ -53,7 +53,7 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
 
     // evaluate deepest layer scores
     for (int j=0; j<layerSizes[maxDepth-1]; j++) {
-        scoreLayers[maxDepth-1][j] = boardLayers[maxDepth-1][j].score();
+        scoreLayers[maxDepth-1][j] = boardLayers[maxDepth-1][j].score(A, A);
     }
 
     // collect scores

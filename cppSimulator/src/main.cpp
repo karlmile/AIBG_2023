@@ -62,7 +62,7 @@ int main()
             auto end = std::chrono::high_resolution_clock::now();
 
             if (currentState.ALL[mov.index].x == -1) {
-                std::cout << "P-" << FiguricaCharMap[currentState.ALL[mov.index].F] <<"-" << mov.y << "-" << mov.x << std::endl;
+                std::cout << "P-" << FiguricaCharMap.at(currentState.ALL[mov.index].F) <<"-" << mov.y << "-" << mov.x << std::endl;
             } 
             else {
                 std::cout << "M-" << currentState.ALL[mov.index].y << "-" << currentState.ALL[mov.index].x <<"-" << mov.y << "-" << mov.x << std::endl;
