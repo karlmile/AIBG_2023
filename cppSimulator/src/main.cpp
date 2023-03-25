@@ -4,56 +4,85 @@
 #include <list>
 #include <string>
 #include <chrono>
+#include <sstream>
 
 int main()
 {
+    bool enableDebug = false;
     Board currentState;
     PlayerID curPlayer = PlayerID::A;
     PlayerID curBoard = PlayerID::A;
     int maxDepth = 3;
     size_t maxMemory = 1000000;
 
-    std::cout << "Size of structure: " << sizeof(Board) << "B" << std::endl;
+    if (enableDebug) {
+        std::cout << "Size of structure: " << sizeof(Board) << "B" << std::endl;
+    }
 
     // loop
     bool running = true;
     while (running)
     {
-        std::cout << "??? set (board state); depth (d); minimax; end;" << std::endl;
+        if (enableDebug || true) {
+            std::cerr << "??? set (board state); depth (d); minimax; end;" << std::endl;
+        }
+        std::string line;
+        std::getline(std::cin, line);
+        std::stringstream lineSS;
+        lineSS << line;
         std::string comm;
-        std::cin >> comm;
+        lineSS >> comm;
+
+        std::cerr << "Recved line '" << line << "', command '" << comm << std::endl;
 
         if (comm == "set")
         {
             int num;
 
             // potez
-            std::cin >> num;
+            std::cerr << "Setting moves" << std::endl;
+            lineSS >> num;
             curPlayer = (PlayerID)num;
-            std::cin >> num;
+            lineSS >> num;
             curBoard = (PlayerID)num;
 
+            // figureposs
+            for (int i=0; i<96; i++) {
+                currentState.ALL[i].x = -1;
+                currentState.ALL[i].y = -1;
+            }
+
             // board
+            std::cerr << "Setting board" << std::endl;
             for (int b: {0,1}) {
                 for (int y=0; y<12; y++) {
                     for (int x=0; x<12; x++) {
-                        std::cin >> currentState.boards[b][y][x];
-                        if (currentState.boards[b][y][x] != -1) {
-                            currentState.ALL[currentState.boards[b][x][y]].x = x;
-                            currentState.ALL[currentState.boards[b][x][y]].y = y;
+                        int ind;
+                        lineSS >> ind;
+                        currentState.boards[b][y][x] = ind;
+                        if (ind != -1) {
+                            currentState.ALL[ind].x = x;
+                            currentState.ALL[ind].y = y;
                         }
                     }
                 }
             }
 
             // figures
+            std::cerr << "Setting figures" << std::endl;
             for (int i=0; i<96; i++) {
-                char type;
-                std::cin >> type;
+                char type, plocaC, vlasnikC;
+                lineSS >> type;
+                lineSS >> plocaC;
+                lineSS >> vlasnikC;
                 if (type != '-') {
                     currentState.ALL[i].F = CharFiguricaMap.at(type);
+                    currentState.ALL[i].player = (PlayerID)(vlasnikC - '0');
+                    currentState.ALL[i].board = (PlayerID)(plocaC - '0');
                 }
             }
+
+            std::cerr << "Set board" << std::endl;
         }
         else if (comm == "minimax")
         {
@@ -72,11 +101,11 @@ int main()
         }
         else if (comm == "depth")
         {
-            std::cin >> maxDepth;
+            lineSS >> maxDepth;
         }
         else if (comm == "memory")
         {
-            std::cin >> maxMemory;
+            lineSS >> maxMemory;
         }
         else if (comm == "end")
         {

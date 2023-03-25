@@ -35,6 +35,8 @@ float Board::score(PlayerID ploca , PlayerID player) const{
         if (ALL[i].player == player){
             switch (ALL[i].F)
             {
+            case Kralj:
+                break;
             case Pijan:
                 score += 10;
                 break;
@@ -98,6 +100,7 @@ Board Board::potez(Board X, Move M) const{
         switch (X.ALL[M.index].F)
         {
         case Kamikaza:
+        {
             if (X.ALL[X.boards[ploca][M.x][M.y]].F == Lovac){//ako je na polju na koje dolazimo lovac onda ubijamo susjedne dijagonalne
                 if (X.boards[ploca][M.x+1][M.y+1] != -1 && X.ALL[X.boards[ploca][M.x+1][M.y+1]].F != Cigla && X.ALL[X.boards[ploca][M.x+1][M.y+1]].F !=Kralj){
                     X.ALL[X.boards[ploca][M.x+1][M.y+1]].x = -1;
@@ -308,8 +311,9 @@ Board Board::potez(Board X, Move M) const{
             }
 
             break;
-
+        }
         case Top:
+        {
             if (X.ALL[X.boards[ploca][M.x][M.y]].F == Lovac){//ako je na polju na koje dolazimo lovac onda ubijamo susjedne dijagonalne
                 if (X.boards[ploca][M.x+1][M.y+1] != -1 && X.ALL[X.boards[ploca][M.x+1][M.y+1]].F != Cigla && X.ALL[X.boards[ploca][M.x+1][M.y+1]].F !=Kralj){
                     X.ALL[X.boards[ploca][M.x+1][M.y+1]].x = -1;
@@ -407,6 +411,7 @@ Board Board::potez(Board X, Move M) const{
                 }
             }
             break;
+        }
         case Snajper:
             if (X.ALL[X.boards[ploca][M.x][M.y]].F == Lovac){//ako je na polju na koje dolazimo lovac onda ubijamo susjedne dijagonalne
                 if (X.boards[ploca][M.x+1][M.y+1] != -1 && X.ALL[X.boards[ploca][M.x+1][M.y+1]].F != Cigla && X.ALL[X.boards[ploca][M.x+1][M.y+1]].F !=Kralj){
@@ -580,7 +585,13 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        if (a < 11 && b > 0 && ((*P)[a+1][b-1] == -1 || (ALL[(*P)[a+1][b-1]].F != Cigla && ALL[(*P)[a+1][b-1]].player != player))){
+                        if (
+                            a < 11 && b > 0 && ((*P)[a+1][b-1] == -1 ||
+                            (
+                                ALL[(*P)[a+1][b-1]].F != Cigla &&
+                                ALL[(*P)[a+1][b-1]].player != player
+                            ))
+                        ){
                             Move M;
                             M.board = ploca;
                             M.x = a+1;
@@ -645,8 +656,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (a > 0 && ((*P)[a-1][b] == -1)){
                             while(a > 0 && ((*P)[a][b] == -1) && ALL[(*P)[a-1][b]].F != Cigla && ALL[(*P)[a-1][b]].player != player){
                                 a--;
@@ -660,8 +671,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (a > 0 && b < 11 && ((*P)[a-1][b+1] == -1)){
                             while(a > 0 && b > 11 && ((*P)[a][b] == -1) && ALL[(*P)[a-1][b+1]].F != Cigla && ALL[(*P)[a-1][b+1]].player != player){
                                 a--; b++;
@@ -675,8 +686,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (a < 11 && b > 0 && ((*P)[a+1][b-1] == -1)){
                             while(a > 0 && b > 0 && ((*P)[a][b] == -1) && ALL[(*P)[a+1][b-1]].F != Cigla && ALL[(*P)[a+1][b-1]].player != player){
                                 a++; b--;
@@ -690,8 +701,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (a < 11 && ((*P)[a+1][b] == -1)){
                             while(a > 0 && ((*P)[a][b] == -1) && ALL[(*P)[a+1][b]].F != Cigla && ALL[(*P)[a+1][b]].player != player){
                                 a++;
@@ -705,8 +716,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (a < 11 && b < 11 && ((*P)[a+1][b+1] == -1)){
                             while(a > 0 && b > 0 && ((*P)[a][b] == -1) && ALL[(*P)[a+1][b+1]].F != Cigla && ALL[(*P)[a+1][b+1]].player != player){
                                 a++; b++;
@@ -720,8 +731,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (b < 11 && ((*P)[a][b+1] == -1)){
                             while(b < 11 && ((*P)[a][b] == -1) && ALL[(*P)[a][b+1]].F != Cigla && ALL[(*P)[a][b+1]].player != player){
                                 b++;
@@ -735,8 +746,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         if (b > 0 && ((*P)[a][b-1] == -1)){
                             while(b > 0 && ((*P)[a][b] == -1) && ALL[(*P)[a][b-1]].F != Cigla && ALL[(*P)[a][b-1]].player != player){
                                 b--;
@@ -750,8 +761,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             outBoards[i] = potez(*this, M);
                             i++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         break;
                     case Lovac:
                         while (a < 11 && b < 11 && ((*P)[a+1][b+1] == -1 || (ALL[(*P)[a+1][b+1]].F != Cigla && ALL[(*P)[a+1][b+1]].player != player))){
@@ -766,8 +777,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a+1][b+1]].player != player){break;}
                             a++; b++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         while (a < 11 && b > 0 && ((*P)[a+1][b-1] == -1 || (ALL[(*P)[a+1][b-1]].F != Cigla && ALL[(*P)[a+1][b-1]].player != player))){
                             Move M;
                             M.board = ploca;
@@ -780,8 +791,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a+1][b-1]].player != player){break;}
                             a++; b--;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         while (a > 0 && b < 11 && ((*P)[a-1][b+1] == -1 || (ALL[(*P)[a-1][b+1]].F != Cigla && ALL[(*P)[a-1][b+1]].player != player))){
                             Move M;
                             M.board = ploca;
@@ -794,8 +805,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a-1][b+1]].player != player){break;}
                             a--; b++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         while (a > 0 && b > 0 && ((*P)[a-1][b-1] == -1 || (ALL[(*P)[a-1][b-1]].F != Cigla && ALL[(*P)[a-1][b-1]].player != player))){
                             Move M;
                             M.board = ploca;
@@ -808,8 +819,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a-1][b--]].player != player){break;}
                             a--; b--;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         break;
                     case Konj:
                         if (0 <= a+1 && a+1 <= 11 && 0 <= b+3 && b+3 <= 11 && ((*P)[a+1][b+3] == -1 || (ALL[(*P)[a+1][b+3]].F != Cigla && ALL[(*P)[a+1][b+3]].player != player))){
@@ -906,8 +917,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a-1][b]].player != player){break;}
                             a--;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         while (a < 11 && ((*P)[a+1][b] == -1 || (ALL[(*P)[a+1][b]].F != Cigla && ALL[(*P)[a+1][b]].player != player))){
                             Move M;
                             M.board = ploca;
@@ -920,8 +931,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a+1][b]].player != player){break;}
                             a++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         while (b > 0 && ((*P)[a][b-1] == -1 || (ALL[(*P)[a][b-1]].F != Cigla && ALL[(*P)[a][b-1]].player != player))){
                             Move M;
                             M.board = ploca;
@@ -934,8 +945,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a][b-1]].player != player){break;}
                             b--;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         while (b < 11 && ((*P)[a][b+1] == -1 || (ALL[(*P)[a][b+1]].F != Cigla && ALL[(*P)[a][b+1]].player != player))){
                             Move M;
                             M.board = ploca;
@@ -948,8 +959,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                             if (ALL[(*P)[a][b+1]].player != player){break;}
                             b++;
                         }
-                        int a = ALL[j].x;
-                        int b = ALL[j].y;
+                        a = ALL[j].x;
+                        b = ALL[j].y;
                         break;
                     case Cigla:
                         if (a > 0 && b > 0 && (*P)[a-1][b-1] == -1 ){

@@ -4,6 +4,7 @@ import json
 import random
 import time
 import subprocess
+import time
 from requests_futures.sessions import FuturesSession
 from dataclasses import dataclass
 
@@ -60,51 +61,53 @@ def recvAsyncJson(future, returnsMessage=False):
     return responseObj
 
 class Figure:
-    def __init__(self, jsonState: any) -> None:
+    def __init__(self, jsonState: any, ploca: int, vlasnik: int) -> None:
         self.vrsta = jsonState["oznaka"]
+        self.ploca = ploca
+        self.vlasnik = vlasnik
         pass
 
 FigCountPerColor = 48
 
 class Board:
-    def __init__(self, jsonState: any, whiteFigs, blackFigs) -> None:
+    def __init__(self, jsonState: any, whiteFigs, blackFigs, ploca, whiteVlasnik1: bool) -> None:
         self.whiteFigs: list[int] = whiteFigs
         self.blackFigs: list[int] = blackFigs
 
         self.fields = [
             [
-                self.getNewFigInd(fig)
+                self.getNewFigInd(fig, ploca, whiteVlasnik1)
                 for fig in line
             ]
             for line in jsonState["board"]
         ]
 
         self.whiteCaptured = [
-            self.getNewFigInd(fig)
+            self.getNewFigInd(fig, ploca, whiteVlasnik1)
             for fig in jsonState["whitePiecesPlacement"]
         ] + [
-            self.getNewFigInd(fig)
+            self.getNewFigInd(fig, ploca, whiteVlasnik1)
             for fig in jsonState["whitePijanPlacement"]
         ]
 
         self.blackCaptured = [
-            self.getNewFigInd(fig)
+            self.getNewFigInd(fig, ploca, whiteVlasnik1)
             for fig in jsonState["blackPiecesPlacement"]
         ] + [
-            self.getNewFigInd(fig)
+            self.getNewFigInd(fig, ploca, whiteVlasnik1)
             for fig in jsonState["blackPijanPlacement"]
         ]
         
-    def getNewFigInd(self, jsonState: "any|None") -> int:
+    def getNewFigInd(self, jsonState: "any|None", ploca, whiteVlasnik1) -> int:
         if jsonState is None:
             return -1
         else:
             if jsonState["black"] == True:
-                self.blackFigs.append(Figure(jsonState))
+                self.blackFigs.append(Figure(jsonState, ploca, 1 if whiteVlasnik1 else 0))
                 return len(self.blackFigs)-1 + FigCountPerColor
             else:
-                self.blackFigs.append(Figure(jsonState))
-                return len(self.blackFigs)-1 + FigCountPerColor
+                self.whiteFigs.append(Figure(jsonState, ploca, 0 if whiteVlasnik1 else 1))
+                return len(self.whiteFigs)-1
 
 
 class GameState:
@@ -113,8 +116,8 @@ class GameState:
         enemyPlyInd = 1 if whiteOnBoard1 else 0
         self.whiteFigs: list[Figure] = []
         self.blackFigs: list[Figure] = []
-        self.board1 = Board(jsonState["boardState1"], self.whiteFigs, self.blackFigs)
-        self.board2 = Board(jsonState["boardState2"], self.whiteFigs, self.blackFigs)
+        self.board1 = Board(jsonState["boardState1"], self.whiteFigs, self.blackFigs, 0, whiteOnBoard1)
+        self.board2 = Board(jsonState["boardState2"], self.whiteFigs, self.blackFigs, 1, not whiteOnBoard1)
         self.turn = myPlyInd if jsonState["boardState1"]["whiteMoves"] == whiteOnBoard1 or jsonState["boardState2"]["whiteMoves"] != whiteOnBoard1 else enemyPlyInd
         self.boardTurn = 0 if (jsonState["boardState1"]["whiteMoves"] and whiteOnBoard1) or (not jsonState["boardState2"]["whiteMoves"] and not whiteOnBoard1) else 1
         self.phase = jsonState["boardState1"]["phase"]
@@ -122,16 +125,24 @@ class GameState:
         pass
 
     def __str__(self) -> str:
-        boardIndsStr = "".join([ind for board in [self.board1, self.board2] for line in board for ind in line])
+        boardIndsStr = " ".join([str(ind) for board in [self.board1, self.board2] for line in board.fields for ind in line])
         figureLettersStr = ""
         for fig in self.whiteFigs:
-            figureLettersStr.append(fig.vrsta)
+            figureLettersStr += fig.vrsta
+            figureLettersStr += str(fig.ploca)
+            figureLettersStr += str(fig.vlasnik)
         for i in range(len(self.whiteFigs), 48):
-            figureLettersStr.append("-")
+            figureLettersStr += "-"
+            figureLettersStr += "."
+            figureLettersStr += "."
         for fig in self.blackFigs:
-            figureLettersStr.append(fig.vrsta)
+            figureLettersStr += fig.vrsta
+            figureLettersStr += str(fig.ploca)
+            figureLettersStr += str(fig.vlasnik)
         for i in range(len(self.blackFigs), 48):
-            figureLettersStr.append("-")
+            figureLettersStr += "-"
+            figureLettersStr += "."
+            figureLettersStr += "."
         return f"{self.turn} {self.boardTurn} {boardIndsStr} {figureLettersStr}"
 
 
@@ -210,14 +221,15 @@ def main():
             print(f"Waiting for response for {playerNames[i]}...");
             resp = recvAsyncJson(playerJoiningHttpRequests[i])
             print(f"Joined game as {playerNames[i]}! ({time.time()-playerJoiningTimers[i]}s)")
-            gameState = GameState(json.loads(resp["gameState"]))
+            gameState = GameState(json.loads(resp["gameState"]), True)
 
     # start the simulator!
-    simulatorProc = subprocess.Popen(['watch', 'ls'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    simulatorProc = subprocess.Popen(['valgrind', '--tool=memcheck', '--leak-check=full','./build/cppSimulator/board'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 
     # game loop
     print("Starting the game loop!")
     print("-------------------------------------------")
+    
     running = True
     while running:
         print(f"Player {gameState.turn}'s turn!")
@@ -231,7 +243,10 @@ def main():
                 print(f"Enter move (P-FigType-newX-newY)")
                 moveServerStr = input()
         elif playerControllers[gameState.turn] == "bot":
-            simulatorProc.stdin.write(f"set {str(gameState)}".encode("utf-8"))
+            print(f"AI seeking for moves for '{str(gameState)}'...")
+            simulatorProc.stdin.write(f"set {str(gameState)}\n".encode("utf-8"))
+            simulatorProc.stdin.write(f"minimax\n".encode("utf-8"))
+            simulatorProc.stdin.flush()
             moveServerStr = simulatorProc.stdout.readline().decode("utf-8")
             timeStr = simulatorProc.stdout.readline().decode("utf-8")
             print(f"Calced move {moveServerStr} in {timeStr}")
@@ -240,11 +255,13 @@ def main():
         if playerControllers[i] != "remote":
             oldInvalids = gameState.numInvalid
             resp = sendRecvJson(url+"/game/doAction", {"action": moveServerStr}, playerTokens[gameState.turn])
-            gameState = GameState(json.loads(resp["gameState"]))
+            gameState = GameState(json.loads(resp["gameState"]), True)
             if gameState.numInvalid > oldInvalids:
                 print("ERROR: Invalid move")
 
     # cleanup
+    simulatorProc.stdin.write(f"end\n")
+    simulatorProc.stdin.flush()
     simulatorProc.terminate()
 
 

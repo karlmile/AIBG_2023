@@ -21,6 +21,7 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
     moveLayers[0] = std::make_unique<Move[]>(1);
     scoreLayers[0] = std::make_unique<float[]>(1);
     childRangeLayers[0] = std::make_unique<std::pair<size_t, size_t>[]>(1);
+    layerSizes[0] = 1;
     boardLayers[0][0] = b;
 
     // generate moves
@@ -31,7 +32,7 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
         dynScoreMultiplier = -dynScoreMultiplier;
 
         // alloc
-        layerSizes[nextD] = layerSizes[curD]*230;
+        layerSizes[nextD] = layerSizes[curD]*MAX_POTEZA;
         boardLayers[nextD] = std::make_unique<Board[]>(layerSizes[nextD]);
         moveLayers[nextD] = std::make_unique<Move[]>(layerSizes[nextD]);
         scoreLayers[nextD] = std::make_unique<float[]>(layerSizes[nextD]);
@@ -43,9 +44,11 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
             childRangeLayers[curD][i].first = curLayerPos;
             curLayerPos += boardLayers[curD][i].listNextMoves(
                 dynCurPlayer,
-                curBoard, boardLayers[nextD].get()+curLayerPos,
+                curBoard,
+                boardLayers[nextD].get()+curLayerPos,
                 moveLayers[nextD].get()+curLayerPos,
-                layerSizes[nextD] - curLayerPos
+                layerSizes[nextD] - curLayerPos,
+                false
             );
             childRangeLayers[curD][i].second = curLayerPos;
         }
