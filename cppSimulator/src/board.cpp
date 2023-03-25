@@ -768,6 +768,7 @@ void Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Mov
                                 i++;
                             }
                         }
+                        break;
                     default:
                         break;
                     }
