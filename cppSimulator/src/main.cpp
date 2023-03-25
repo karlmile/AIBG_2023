@@ -5,89 +5,51 @@
 #include <string>
 #include <chrono>
 
-using namespace std;
-
 int main()
 {
-    list<board> brds;
-    Field curPlayer = Field::Red;
+    Board currentState;
+    PlayerID curPlayer = PlayerID::A;
     int maxDepth = 3;
-    bool showBoard = true;
 
-    cout << "Size of structure: " << sizeof(board) << "B" << endl;
-
-    // starting state
-    brds.emplace_back();
-    cout << brds.back();
+    std::cout << "Size of structure: " << sizeof(Board) << "B" << std::endl;
 
     // loop
     bool running = true;
     while (running)
     {
-        cout << (curPlayer == Field::Red? "Red" : "Yellow") << "'s turn" << endl;
-        cout << "??? add x; set y/r; depth d; minimax; undo; show; hide; end;" << endl;
-        string comm;
-        cin >> comm;
+        std::cout << "??? set (board state); depth (d); minimax; end;" << std::endl;
+        std::string comm;
+        std::cin >> comm;
 
-        if (comm == "add" || comm == "a")
+        if (comm == "set")
         {
-            int ind;
-            cin >> ind;
+            int num;
 
-            // new state
-            brds.emplace_back(brds.back());
-            brds.back().add(ind, curPlayer);// add coin
-            if (showBoard)
-            {
-                cout << "------------------" << endl;// show state
-                cout << brds.back() << "score: " << brds.back().score() << endl << endl;// show state
+            // potez
+            std::cin >> num;
+            curPlayer = (PlayerID)num;
+
+            // board
+            for (int b: {0,1}) {
+                for (int y=0; y<12; y++) {
+                    for (int x=0; x<12; x++) {
+                        std::cin >> currentState.boards[b][y][x];
+                        if (currentState.boards[b][y][x] != -1) {
+                            currentState.ALL[currentState.boards[b][x][y]].x = x;
+                            currentState.ALL[currentState.boards[b][x][y]].y = y;
+                        }
+                    }
+                }
             }
-            curPlayer = (curPlayer == Field::Red)? Field::Yellow : Field::Red;// switch turn
-        }
-        else if (comm == "autoplay")
-        {
-            auto it = brds.end();
-            it--;
 
-            auto start = std::chrono::high_resolution_clock::now();
-            while (!brds.back().isFinished())
-            {
-                int ind = minimax(brds.back(), curPlayer, maxDepth);
-
-                brds.emplace_back(brds.back());
-                brds.back().add(ind, curPlayer);// add coin
-                curPlayer = (curPlayer == Field::Red)? Field::Yellow : Field::Red;// switch turn
-            }
-            auto end = std::chrono::high_resolution_clock::now();
-            cout << "Calculated in " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << "ms" << endl;// show state
-            
-            it++;
-            while (it != brds.end())
-            {
-                cout << "------------------" << endl;// show state
-                cout << *it << endl;// show state
-                it++;
+            // figures
+            for (int i=0; i<96; i++) {
+                std::string type;
+                std::cin >> type;
+                currentState.ALL[i].F = Kralj;/*TODO*/
             }
         }
-        else if (comm == "set")
-        {
-            char c;
-            cin >> c;
-            if (c == 'y')
-                curPlayer = Field::Yellow;
-            if (c == 'r')
-                curPlayer = Field::Red;
-        }
-        else if (comm == "hide")
-        {
-            showBoard = false;
-        }
-        else if (comm == "show")
-        {
-            cout << brds.back() << "score: " << brds.back().score() << endl << endl;// show state
-            showBoard = true;
-        }
-        else if (comm == "minimax" || comm == "m")
+        else if (comm == "minimax")
         {
             auto start = std::chrono::high_resolution_clock::now();
             int ind = minimax(brds.back(), curPlayer, maxDepth);
@@ -107,13 +69,7 @@ int main()
         }
         else if (comm == "depth")
         {
-            cin >> maxDepth;
-        }
-        else if (comm == "undo" || comm == "u")
-        {
-            brds.pop_back();
-            cout << brds.back() << "score: " << brds.back().score() << endl << endl;// show state
-            curPlayer = (curPlayer == Field::Red)? Field::Yellow : Field::Red;// switch turn
+            std::cin >> maxDepth;
         }
         else if (comm == "end")
         {
