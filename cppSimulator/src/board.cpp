@@ -1134,7 +1134,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                         }
                         break;
                     case Pijan:
-                        if (player == ploca){
+                        if (j<48){
                             if(a==1){
                                 if(0 <= a+2 && a+2 <= 11 && 0 <= b+2 && b+2 <= 11 && (*P)[a+2][b+2] == -1){
                                     Move M;
