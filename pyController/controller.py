@@ -3,8 +3,7 @@ import requests
 import json
 import random
 import time
-import aiohttp
-import asyncio
+import subprocess
 from requests_futures.sessions import FuturesSession
 from dataclasses import dataclass
 
@@ -109,15 +108,31 @@ class Board:
 
 
 class GameState:
-    def __init__(self, jsonState: any) -> None:
-        self.whiteFigs = []
-        self.blackFigs = []
+    def __init__(self, jsonState: any, whiteOnBoard1: bool) -> None:
+        myPlyInd = 0 if whiteOnBoard1 else 1
+        enemyPlyInd = 1 if whiteOnBoard1 else 0
+        self.whiteFigs: list[Figure] = []
+        self.blackFigs: list[Figure] = []
         self.board1 = Board(jsonState["boardState1"], self.whiteFigs, self.blackFigs)
         self.board2 = Board(jsonState["boardState2"], self.whiteFigs, self.blackFigs)
-        self.turn = 0 if jsonState["boardState1"]["whiteMoves"] == True else 1
+        self.turn = myPlyInd if jsonState["boardState1"]["whiteMoves"] == whiteOnBoard1 or jsonState["boardState2"]["whiteMoves"] != whiteOnBoard1 else enemyPlyInd
+        self.boardTurn = 0 if (jsonState["boardState1"]["whiteMoves"] and whiteOnBoard1) or (not jsonState["boardState2"]["whiteMoves"] and not whiteOnBoard1) else 1
         self.phase = jsonState["boardState1"]["phase"]
         self.numInvalid = jsonState["illegalMoveCounter"]
         pass
+
+    def __str__(self) -> str:
+        boardIndsStr = "".join([ind for board in [self.board1, self.board2] for line in board for ind in line])
+        figureLettersStr = ""
+        for fig in self.whiteFigs:
+            figureLettersStr.append(fig.vrsta)
+        for i in range(len(self.whiteFigs), 48):
+            figureLettersStr.append("-")
+        for fig in self.blackFigs:
+            figureLettersStr.append(fig.vrsta)
+        for i in range(len(self.blackFigs), 48):
+            figureLettersStr.append("-")
+        return f"{self.turn} {self.boardTurn} {boardIndsStr} {figureLettersStr}"
 
 
 
@@ -133,7 +148,7 @@ def main():
     playerInds = [0, 1]
     playerNames = ["player1", "player2"]
     playerPasswords = ["sifra1", "sifra2"]
-    playerControllers: list[str] = ["manual", "manual"]
+    playerControllers: list[str] = ["bot", "bot"]
     playerTokens: list[str|None] = [None, None]
 
     i = 1
@@ -197,6 +212,9 @@ def main():
             print(f"Joined game as {playerNames[i]}! ({time.time()-playerJoiningTimers[i]}s)")
             gameState = GameState(json.loads(resp["gameState"]))
 
+    # start the simulator!
+    simulatorProc = subprocess.Popen(['watch', 'ls'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+
     # game loop
     print("Starting the game loop!")
     print("-------------------------------------------")
@@ -213,7 +231,10 @@ def main():
                 print(f"Enter move (P-FigType-newX-newY)")
                 moveServerStr = input()
         elif playerControllers[gameState.turn] == "bot":
-            raise RuntimeError("Bot not implemented yet!")
+            simulatorProc.stdin.write(f"set {str(gameState)}".encode("utf-8"))
+            moveServerStr = simulatorProc.stdout.readline().decode("utf-8")
+            timeStr = simulatorProc.stdout.readline().decode("utf-8")
+            print(f"Calced move {moveServerStr} in {timeStr}")
 
 
         if playerControllers[i] != "remote":
@@ -222,6 +243,9 @@ def main():
             gameState = GameState(json.loads(resp["gameState"]))
             if gameState.numInvalid > oldInvalids:
                 print("ERROR: Invalid move")
+
+    # cleanup
+    simulatorProc.terminate()
 
 
 if __name__ == "__main__":
