@@ -12,6 +12,51 @@ const std::map<char, Figurica> CharFiguricaMap = {
     {'S', Snajper}
 };
 
+float Board::score(PlayerID ploca , PlayerID player) const{
+    double score = 0;
+
+    for (int i=0; i<96; i++){
+        if (ALL[i].F == Kralj && ALL[i].x == -1){
+            return (ALL[i].player == player) ? 0 : 1;
+        }
+
+        if (ALL[i].player == player){
+            switch (ALL[i].F)
+            {
+            case Pijan:
+                score += 10;
+                break;
+            case Cigla:
+                score += 15;
+                break;
+            case Dama:
+                score += 45;
+                break;
+            case Kamikaza:
+                if (ALL[i].x != -2)
+                    score += 30;
+                break;
+            case Konj:
+                score += 25;
+                break;
+            case Lovac:
+                score += 15;
+                break;
+            case Top:
+                score += 35;
+                break;
+            case Snajper:
+                score += 25;
+                break;
+            }
+        }
+    }
+
+    score /= 430.0;
+
+    return score;
+}
+
 
 Board Board::potez(Board X, Move M) const{
     //definiram ko sm mi a ko suprotni
@@ -97,7 +142,7 @@ Board Board::potez(Board X, Move M) const{
             y=M.y;
 
             if (x == 0 ){ //ako smo u prvom redu
-                if(X.boards[ploca][x + 1][y].F != Cigla && X.boards[ploca][x + 1][y].F != Kralj){
+                if(X.ALL[X.boards[ploca][x + 1][y]].F != Cigla && X.ALL[boards[ploca][x + 1][y]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x + 1][y]].x = -1;
                     X.ALL[X.boards[ploca][x + 1][y]].y = -1;
@@ -115,7 +160,7 @@ Board Board::potez(Board X, Move M) const{
                         X.ALL[X.boards[ploca][x][y - 1]].board = druga_ploca;
                         X.boards[ploca][x][y - 1] = -1;
                     }
-                    else if(X.boards[ploca][x][y + 1].F != Cigla && X.boards[ploca][x][y + 1].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x][y + 1]].F != Cigla && X.ALL[boards[ploca][x ][y + 1]].F != Kralj){
                         
                         X.ALL[X.boards[ploca][x][y + 1]].x = -1;
                         X.ALL[X.boards[ploca][x][y + 1]].y = -1;
@@ -143,7 +188,7 @@ Board Board::potez(Board X, Move M) const{
             }
 
             if (x == 11 ){ //ako smo u zadnjem redu
-                if(X.boards[ploca][x - 1][y].F != Cigla && X.boards[ploca][x - 1][y].F != Kralj){
+                if(X.ALL[X.boards[ploca][x - 1][y]].F != Cigla && X.ALL[boards[ploca][x - 1][y]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x - 1][y]].x = -1;
                     X.ALL[X.boards[ploca][x - 1][y]].y = -1;
@@ -161,7 +206,7 @@ Board Board::potez(Board X, Move M) const{
                         X.ALL[X.boards[ploca][x][y - 1]].board = druga_ploca;
                         X.boards[ploca][x][y - 1] = -1;
                     }
-                    else if(X.boards[ploca][x][y + 1].F != Cigla && X.boards[ploca][x][y + 1].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x][y + 1]].F != Cigla && X.ALL[boards[ploca][x ][y + 1]].F != Kralj){
 
                         X.ALL[X.boards[ploca][x][y + 1]].x = -1;
                         X.ALL[X.boards[ploca][x][y + 1]].y = -1;
@@ -190,7 +235,7 @@ Board Board::potez(Board X, Move M) const{
             }
 
             if (y == 0 ){ //ako smo lijevo
-                if(X.boards[ploca][x][y + 1].F != Cigla && X.boards[ploca][x][y + 1].F != Kralj){
+                if(X.ALL[X.boards[ploca][x][y + 1]].F != Cigla && X.ALL[boards[ploca][x ][y + 1]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x][y + 1]].x = -1;
                     X.ALL[X.boards[ploca][x][y + 1]].y = -1;
@@ -209,7 +254,7 @@ Board Board::potez(Board X, Move M) const{
                         X.boards[ploca][x - 1][y] = -1;
                         
                     }
-                    else if(X.boards[ploca][x + 1][y].F != Cigla && X.boards[ploca][x + 1][y].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x + 1][y]].F != Cigla && X.ALL[boards[ploca][x + 1][y]].F != Kralj){
                         
                         X.ALL[X.boards[ploca][x + 1][y]].x = -1;
                         X.ALL[X.boards[ploca][x + 1][y]].y = -1;
@@ -221,7 +266,7 @@ Board Board::potez(Board X, Move M) const{
             }
 
             if (y == 11 ){ //ako smo desno
-                if(X.boards[ploca][x][y - 1].F != Cigla && X.boards[ploca][x][y - 1].F != Kralj){
+                if(X.ALL[X.boards[ploca][x][y - 1]].F != Cigla && X.ALL[boards[ploca][x ][y - 1]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x][y - 1]].x = -1;
                     X.ALL[X.boards[ploca][x][y - 1]].y = -1;
@@ -239,7 +284,7 @@ Board Board::potez(Board X, Move M) const{
                         X.ALL[X.boards[ploca][x - 1][y]].board = druga_ploca;
                         X.boards[ploca][x - 1][y] = -1;
                     }
-                    else if(X.boards[ploca][x + 1][y].F != Cigla && X.boards[ploca][x + 1][y].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x + 1][y]].F != Cigla && X.ALL[boards[ploca][x + 1][y]].F != Kralj){
                         
                         X.ALL[X.boards[ploca][x + 1][y]].x = -1;
                         X.ALL[X.boards[ploca][x + 1][y]].y = -1;
