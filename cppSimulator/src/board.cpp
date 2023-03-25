@@ -511,7 +511,7 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                 if (pocetak){
                     if (ALL[j].x == -1){
                         for (int i2 = 0; i2 < 12; i2++){
-                            int i1 = (player == ploca)? 1:10;
+                            int i1 = (j < 48)? 1:10;
                             if ((*P)[i1][i2] == -1){
                                 Move M;
                                 M.board = ploca;
