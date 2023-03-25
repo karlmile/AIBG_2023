@@ -12,7 +12,7 @@ const std::map<char, Figurica> CharFiguricaMap = {
     {'S', Snajper}
 };
 
-const std::map<char, Figurica> FiguricaCharMap = {
+const std::map<Figurica, char> FiguricaCharMap = {
     {Kralj, 'K'},
     {Pijan, 'P'},
     {Cigla, 'C'},
