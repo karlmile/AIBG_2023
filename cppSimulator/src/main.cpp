@@ -46,7 +46,7 @@ int main()
             for (int i=0; i<96; i++) {
                 std::string type;
                 std::cin >> type;
-                currentState.ALL[i].F = Kralj;/*TODO*/
+                currentState.ALL[i].F = CharFiguricaMap.at(type[0]);
             }
         }
         else if (comm == "minimax")
