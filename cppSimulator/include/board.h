@@ -20,6 +20,7 @@ enum Figurica : uint8_t
 };
 
 extern const std::map<char, Figurica> CharFiguricaMap;
+extern const std::map<Figurica, char> FiguricaCharMap;
 
 enum PlayerID : uint8_t
 {
