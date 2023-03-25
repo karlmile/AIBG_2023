@@ -20,6 +20,7 @@ enum Figurica : uint8_t
 };
 
 extern const std::map<char, Figurica> CharFiguricaMap;
+extern const std::map<Figurica, char> FiguricaCharMap;
 
 enum PlayerID : uint8_t
 {
@@ -48,9 +49,9 @@ const int MAX_POTEZA = 230;
 struct Board{
     int boards[2][12][12];
     figura ALL[96];
-    float score() const;
+    float score(PlayerID ploca , PlayerID player) const;
     Board potez(Board old, Move M) const;
-    int listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
+    int listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs, bool pocetak) const;
 };
 
 std::ostream& operator << (std::ostream& o, const Board& b);

@@ -12,9 +12,61 @@ const std::map<char, Figurica> CharFiguricaMap = {
     {'S', Snajper}
 };
 
-float Board::score() const
-{
-    
+const std::map<Figurica, char> FiguricaCharMap = {     
+    {Kralj, 'K'},     
+    {Pijan, 'P'},     
+    {Cigla, 'C'},    
+    {Dama, 'D'},     
+    {Kamikaza, 'J'},     
+    {Konj, 'N'},     
+    {Lovac, 'L'},     
+    {Top, 'T'},     
+    {Snajper, 'S'} 
+};
+
+float Board::score(PlayerID ploca , PlayerID player) const{
+    double score = 0;
+
+    for (int i=0; i<96; i++){
+        if (ALL[i].F == Kralj && ALL[i].x == -1){
+            return (ALL[i].player == player) ? 0 : 1;
+        }
+
+        if (ALL[i].player == player){
+            switch (ALL[i].F)
+            {
+            case Pijan:
+                score += 10;
+                break;
+            case Cigla:
+                score += 15;
+                break;
+            case Dama:
+                score += 45;
+                break;
+            case Kamikaza:
+                if (ALL[i].x != -2)
+                    score += 30;
+                break;
+            case Konj:
+                score += 25;
+                break;
+            case Lovac:
+                score += 15;
+                break;
+            case Top:
+                score += 35;
+                break;
+            case Snajper:
+                score += 25;
+                break;
+            }
+        }
+    }
+
+    score /= 430.0;
+
+    return score;
 }
 
 
@@ -451,11 +503,30 @@ Board Board::potez(Board X, Move M) const{
 
 }
 
-int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const{
+int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs, bool pocetak) const{
     int i = 0;
     const int (*P)[12][12] = &boards[ploca];
         for (int j = 0; j < 96; j++){
             if (ALL[j].player == player && ALL[j].board == ploca){
+                if (pocetak){
+                    if (ALL[j].x == -1){
+                        for (int i2 = 0; i2 < 12; i2++){
+                            int i1 = (player == ploca)? 1:10;
+                            if ((*P)[i1][i2] == -1){
+                                Move M;
+                                M.board = ploca;
+                                M.x = i1;
+                                M.y = i2;
+                                M.index = j;
+                                outMoves[i] = M;
+                                outBoards[i] = potez(*this, M);
+                                i++;
+                            }
+                        }
+                    }
+
+                    continue;
+                }
                 if (ALL[j].x == -1){
                     for (int i1 = 0; i1 < 12; i1++){
                         for (int i2 = 0; i2 < 12; i2++){
@@ -472,7 +543,8 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                         }
                     }
                 }
-                else if (ALL[j].x >= 0){
+                
+                if (ALL[j].x >= 0){
                     int a = ALL[j].x;
                     int b = ALL[j].y;
                     switch (ALL[j].F)
@@ -1004,45 +1076,61 @@ int Board::listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move
                         }
                         break;
                     case Snajper:
-                        if (0 <= a+2 && a+2 <= 11 && 0 <= b && b <= 11 && ((*P)[a+2][b] ==-1 || (ALL[(*P)[a+2][b]].player != player && ALL[(*P)[a+2][b]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a+2;
-                            M.y = b;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a+2 && a+2 <= 11 && 0 <= b && b <= 11 && ALL[(*P)[a+2][b]].F != Cigla){
+                            if ((*P)[a+1][b] == -1){
+                                if ((*P)[a+2][b] == -1 || ALL[(*P)[a+2][b]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a+2;
+                                    M.y = b;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
-                        if (0 <= a-2 && a-2 <= 11 && 0 <= b && b <= 11 && ((*P)[a-2][b] ==-1 || (ALL[(*P)[a-2][b]].player != player && ALL[(*P)[a-2][b]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a-2;
-                            M.y = b;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a-2 && a-2 <= 11 && 0 <= b && b <= 11 && ALL[(*P)[a-2][b]].F != Cigla){
+                            if ((*P)[a-1][b] == -1){
+                                if ((*P)[a-2][b] == -1 || ALL[(*P)[a-2][b]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a-2;
+                                    M.y = b;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
-                        if (0 <= a && a <= 11 && 0 <= b-2 && b-2 <= 11 && ((*P)[a][b-2] ==-1 || (ALL[(*P)[a][b-2]].player != player && ALL[(*P)[a][b-2]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a;
-                            M.y = b-2;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a && a <= 11 && 0 <= b+2 && b+2 <= 11 && ALL[(*P)[a][b+2]].F != Cigla){
+                            if ((*P)[a][b+1] == -1){
+                                if ((*P)[a][b+2] == -1 || ALL[(*P)[a][b+2]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a;
+                                    M.y = b+2;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
-                        if (0 <= a && a <= 11 && 0 <= b+2 && b+2 <= 11 && ((*P)[a][b+2] ==-1 || (ALL[(*P)[a][b+2]].player != player && ALL[(*P)[a][b+2]].F != Cigla))){
-                            Move M;
-                            M.board = ploca;
-                            M.x = a;
-                            M.y = b+2;
-                            M.index = j;
-                            outMoves[i] = M;
-                            outBoards[i] = potez(*this, M);
-                            i++;
+                        if (0 <= a && a <= 11 && 0 <= b-2 && b-2 <= 11 && ALL[(*P)[a][b-2]].F != Cigla){
+                            if ((*P)[a][b-1] == -1){
+                                if ((*P)[a][b-2] == -1 || ALL[(*P)[a][b-2]].player != player){
+                                    Move M;
+                                    M.board = ploca;
+                                    M.x = a;
+                                    M.y = b-2;
+                                    M.index = j;
+                                    outMoves[i] = M;
+                                    outBoards[i] = potez(*this, M);
+                                    i++;
+                                }
+                            }
                         }
                         break;
                     case Pijan:
