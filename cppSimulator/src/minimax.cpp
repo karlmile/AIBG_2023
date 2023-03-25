@@ -2,7 +2,7 @@
 #include <limits>
 #include <memory>
 
-Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int maxDepth, size_t maxMemory)
+Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int maxDepth, size_t maxMemory, bool pocetak)
 {
     /*
     ply 0 - max
@@ -21,6 +21,7 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
     moveLayers[0] = std::make_unique<Move[]>(1);
     scoreLayers[0] = std::make_unique<float[]>(1);
     childRangeLayers[0] = std::make_unique<std::pair<size_t, size_t>[]>(1);
+    layerSizes[0] = 1;
     boardLayers[0][0] = b;
 
     // generate moves
@@ -31,11 +32,11 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
         dynScoreMultiplier = -dynScoreMultiplier;
 
         // alloc
-        layerSizes[nextD] = layerSizes[curD]*230;
+        layerSizes[nextD] = layerSizes[curD]*MAX_POTEZA;
         boardLayers[nextD] = std::make_unique<Board[]>(layerSizes[nextD]);
         moveLayers[nextD] = std::make_unique<Move[]>(layerSizes[nextD]);
         scoreLayers[nextD] = std::make_unique<float[]>(layerSizes[nextD]);
-        childRangeLayers[nextD] = std::make_unique<std::pair<size_t, size_t>[]>(nextD);
+        childRangeLayers[nextD] = std::make_unique<std::pair<size_t, size_t>[]>(layerSizes[nextD]);
 
         // list moves
         size_t curLayerPos = 0;
@@ -43,21 +44,24 @@ Move broadMinimax(const Board& b, PlayerID curPlayer, PlayerID curBoard, int max
             childRangeLayers[curD][i].first = curLayerPos;
             curLayerPos += boardLayers[curD][i].listNextMoves(
                 dynCurPlayer,
-                curBoard, boardLayers[nextD].get()+curLayerPos,
+                curBoard,
+                boardLayers[nextD].get()+curLayerPos,
                 moveLayers[nextD].get()+curLayerPos,
-                layerSizes[nextD] - curLayerPos
+                layerSizes[nextD] - curLayerPos,
+                pocetak
             );
             childRangeLayers[curD][i].second = curLayerPos;
         }
+        layerSizes[nextD] = curLayerPos;
     }
 
     // evaluate deepest layer scores
     for (int j=0; j<layerSizes[maxDepth-1]; j++) {
-        scoreLayers[maxDepth-1][j] = boardLayers[maxDepth-1][j].score();
+        scoreLayers[maxDepth-1][j] = boardLayers[maxDepth-1][j].score(A, A);
     }
 
     // collect scores
-    for (int nextD = maxDepth-1; nextD > 1; nextD++) {
+    for (int nextD = maxDepth-1; nextD >= 1; nextD++) {
         int curD = nextD-1;
 
         // find scores

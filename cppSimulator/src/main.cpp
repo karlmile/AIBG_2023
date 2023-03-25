@@ -4,74 +4,116 @@
 #include <list>
 #include <string>
 #include <chrono>
+#include <sstream>
 
 int main()
 {
+    bool enableDebug = false;
     Board currentState;
+    bool pocetak;
     PlayerID curPlayer = PlayerID::A;
-    int maxDepth = 3;
+    PlayerID curBoard = PlayerID::A;
+    int maxDepth = 2;
+    size_t maxMemory = 1000000;
 
-    std::cout << "Size of structure: " << sizeof(Board) << "B" << std::endl;
+    if (enableDebug) {
+        std::cout << "Size of structure: " << sizeof(Board) << "B" << std::endl;
+    }
 
     // loop
     bool running = true;
     while (running)
     {
-        std::cout << "??? set (board state); depth (d); minimax; end;" << std::endl;
+        if (enableDebug) {
+            std::cerr << "??? set (board state); depth (d); minimax; end;" << std::endl;
+        }
+        std::string line;
+        std::getline(std::cin, line);
+        std::stringstream lineSS;
+        lineSS << line;
         std::string comm;
-        std::cin >> comm;
+        lineSS >> comm;
+
+        if (enableDebug) {
+            std::cerr << "Recved line '" << line << "', command '" << comm << std::endl;
+        }
 
         if (comm == "set")
         {
             int num;
 
             // potez
-            std::cin >> num;
+            std::cerr << "Setting moves" << std::endl;
+            lineSS >> num;
             curPlayer = (PlayerID)num;
+            lineSS >> num;
+            curBoard = (PlayerID)num;
+            int phase;
+            lineSS >> phase;
+            pocetak = (phase == 1);
+
+            std::cerr << "Pocetak: " << pocetak << std::endl;
+
+            // figureposs
+            for (int i=0; i<96; i++) {
+                currentState.ALL[i].x = -1;
+                currentState.ALL[i].y = -1;
+            }
 
             // board
+            std::cerr << "Setting board" << std::endl;
             for (int b: {0,1}) {
                 for (int y=0; y<12; y++) {
                     for (int x=0; x<12; x++) {
-                        std::cin >> currentState.boards[b][y][x];
-                        if (currentState.boards[b][y][x] != -1) {
-                            currentState.ALL[currentState.boards[b][x][y]].x = x;
-                            currentState.ALL[currentState.boards[b][x][y]].y = y;
+                        int ind;
+                        lineSS >> ind;
+                        currentState.boards[b][y][x] = ind;
+                        if (ind != -1) {
+                            currentState.ALL[ind].x = x;
+                            currentState.ALL[ind].y = y;
                         }
                     }
                 }
             }
 
             // figures
+            std::cerr << "Setting figures" << std::endl;
             for (int i=0; i<96; i++) {
-                char type;
-                std::cin >> type;
+                char type, plocaC, vlasnikC;
+                lineSS >> type;
+                lineSS >> plocaC;
+                lineSS >> vlasnikC;
                 if (type != '-') {
                     currentState.ALL[i].F = CharFiguricaMap.at(type);
+                    currentState.ALL[i].player = (PlayerID)(vlasnikC - '0');
+                    currentState.ALL[i].board = (PlayerID)(plocaC - '0');
                 }
             }
+
+            std::cerr << "Set board" << std::endl;
         }
         else if (comm == "minimax")
         {
             auto start = std::chrono::high_resolution_clock::now();
-            int ind = minimax(brds.back(), curPlayer, maxDepth);
+            Move mov = broadMinimax(currentState, curPlayer, curBoard, maxDepth, maxMemory, pocetak);
             auto end = std::chrono::high_resolution_clock::now();
-            cout << "Calculated in " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << "ms" << endl;// show state
 
-            // new state
-            brds.emplace_back(brds.back());
-            brds.back().add(ind, curPlayer);// add coin
-            if (showBoard)
-            {
-                cout << "------------------" << endl;// show state
-                cout << brds.back() << "score: " << brds.back().score() << endl << endl;// show state
-            }
-            cout << "~Played " << ind << endl;// show state
-            curPlayer = (curPlayer == Field::Red)? Field::Yellow : Field::Red;// switch turn
+            if (currentState.ALL[mov.index].x == -1) {
+                std::cout << "P-" << FiguricaCharMap.at(currentState.ALL[mov.index].F) <<"-" << mov.y << "-" << mov.x << std::endl;
+            } 
+            else {
+                std::cout << "M-" << currentState.ALL[mov.index].y << "-" << currentState.ALL[mov.index].x <<"-" << mov.y << "-" << mov.x << std::endl;
+            } 
+
+            std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << "ms" << std::endl;// show state
         }
         else if (comm == "depth")
         {
-            std::cin >> maxDepth;
+            lineSS >> maxDepth;
+        }
+        else if (comm == "memory")
+        {
+            lineSS >> maxMemory;
         }
         else if (comm == "end")
         {
