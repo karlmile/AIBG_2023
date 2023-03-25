@@ -4,6 +4,7 @@
 #include <array>
 #include <ostream>
 #include <inttypes.h>
+#include <map>
 
 enum Figurica : uint8_t
 {
@@ -17,6 +18,8 @@ enum Figurica : uint8_t
     Top,
     Pijan
 };
+
+extern const std::map<char, Figurica> CharFiguricaMap;
 
 enum PlayerID : uint8_t
 {

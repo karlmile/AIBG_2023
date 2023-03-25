@@ -1,5 +1,17 @@
 #include "board.h"
 
+const std::map<char, Figurica> CharFiguricaMap = {
+    {'K', Kralj},
+    {'P', Pijan},
+    {'C', Cigla},
+    {'D', Dama},
+    {'J', Kamikaza},
+    {'N', Konj},
+    {'L', Lovac},
+    {'T', Top},
+    {'S', Snajper}
+};
+
 
 Board Board::potez(Board X, Move M) const{
     //definiram ko sm mi a ko suprotni
