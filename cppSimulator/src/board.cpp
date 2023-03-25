@@ -12,17 +12,7 @@ const std::map<char, Figurica> CharFiguricaMap = {
     {'S', Snajper}
 };
 
-const std::map<Figurica, char> FiguricaCharMap = {
-    {Kralj, 'K'},
-    {Pijan, 'P'},
-    {Cigla, 'C'},
-    {Dama, 'D'},
-    {Kamikaza, 'J'},
-    {Konj, 'N'},
-    {Lovac, 'L'},
-    {Top, 'T'},
-    {Snajper, 'S'}
-};
+
 
 float Board::score() const
 {
