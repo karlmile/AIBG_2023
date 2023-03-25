@@ -97,7 +97,7 @@ Board Board::potez(Board X, Move M) const{
             y=M.y;
 
             if (x == 0 ){ //ako smo u prvom redu
-                if(X.boards[ploca][x + 1][y].F != Cigla && X.boards[ploca][x + 1][y].F != Kralj){
+                if(X.ALL[X.boards[ploca][x + 1][y]].F != Cigla && X.ALL[boards[ploca][x + 1][y]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x + 1][y]].x = -1;
                     X.ALL[X.boards[ploca][x + 1][y]].y = -1;
@@ -115,7 +115,7 @@ Board Board::potez(Board X, Move M) const{
                         X.ALL[X.boards[ploca][x][y - 1]].board = druga_ploca;
                         X.boards[ploca][x][y - 1] = -1;
                     }
-                    else if(X.boards[ploca][x][y + 1].F != Cigla && X.boards[ploca][x][y + 1].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x][y + 1]].F != Cigla && X.ALL[boards[ploca][x ][y + 1]].F != Kralj){
                         
                         X.ALL[X.boards[ploca][x][y + 1]].x = -1;
                         X.ALL[X.boards[ploca][x][y + 1]].y = -1;
@@ -143,7 +143,7 @@ Board Board::potez(Board X, Move M) const{
             }
 
             if (x == 11 ){ //ako smo u zadnjem redu
-                if(X.boards[ploca][x - 1][y].F != Cigla && X.boards[ploca][x - 1][y].F != Kralj){
+                if(X.ALL[X.boards[ploca][x - 1][y]].F != Cigla && X.ALL[boards[ploca][x - 1][y]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x - 1][y]].x = -1;
                     X.ALL[X.boards[ploca][x - 1][y]].y = -1;
@@ -161,7 +161,7 @@ Board Board::potez(Board X, Move M) const{
                         X.ALL[X.boards[ploca][x][y - 1]].board = druga_ploca;
                         X.boards[ploca][x][y - 1] = -1;
                     }
-                    else if(X.boards[ploca][x][y + 1].F != Cigla && X.boards[ploca][x][y + 1].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x][y + 1]].F != Cigla && X.ALL[boards[ploca][x ][y + 1]].F != Kralj){
 
                         X.ALL[X.boards[ploca][x][y + 1]].x = -1;
                         X.ALL[X.boards[ploca][x][y + 1]].y = -1;
@@ -190,7 +190,7 @@ Board Board::potez(Board X, Move M) const{
             }
 
             if (y == 0 ){ //ako smo lijevo
-                if(X.boards[ploca][x][y + 1].F != Cigla && X.boards[ploca][x][y + 1].F != Kralj){
+                if(X.ALL[X.boards[ploca][x][y + 1]].F != Cigla && X.ALL[boards[ploca][x ][y + 1]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x][y + 1]].x = -1;
                     X.ALL[X.boards[ploca][x][y + 1]].y = -1;
@@ -209,7 +209,7 @@ Board Board::potez(Board X, Move M) const{
                         X.boards[ploca][x - 1][y] = -1;
                         
                     }
-                    else if(X.boards[ploca][x + 1][y].F != Cigla && X.boards[ploca][x + 1][y].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x + 1][y]].F != Cigla && X.ALL[boards[ploca][x + 1][y]].F != Kralj){
                         
                         X.ALL[X.boards[ploca][x + 1][y]].x = -1;
                         X.ALL[X.boards[ploca][x + 1][y]].y = -1;
@@ -221,7 +221,7 @@ Board Board::potez(Board X, Move M) const{
             }
 
             if (y == 11 ){ //ako smo desno
-                if(X.boards[ploca][x][y - 1].F != Cigla && X.boards[ploca][x][y - 1].F != Kralj){
+                if(X.ALL[X.boards[ploca][x][y - 1]].F != Cigla && X.ALL[boards[ploca][x ][y - 1]].F != Kralj){
                     
                     X.ALL[X.boards[ploca][x][y - 1]].x = -1;
                     X.ALL[X.boards[ploca][x][y - 1]].y = -1;
@@ -239,7 +239,7 @@ Board Board::potez(Board X, Move M) const{
                         X.ALL[X.boards[ploca][x - 1][y]].board = druga_ploca;
                         X.boards[ploca][x - 1][y] = -1;
                     }
-                    else if(X.boards[ploca][x + 1][y].F != Cigla && X.boards[ploca][x + 1][y].F != Kralj){
+                    else if(X.ALL[X.boards[ploca][x + 1][y]].F != Cigla && X.ALL[boards[ploca][x + 1][y]].F != Kralj){
                         
                         X.ALL[X.boards[ploca][x + 1][y]].x = -1;
                         X.ALL[X.boards[ploca][x + 1][y]].y = -1;
