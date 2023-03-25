@@ -26,7 +26,8 @@ enum PlayerID : uint8_t
 
 struct figura{
     Figurica F;
-    int Position[2];
+    int x;
+    int y;
     PlayerID player;
     PlayerID board;
 };
@@ -34,12 +35,12 @@ struct figura{
 struct Move{
     PlayerID board;
     int index;
-    int Position[2];
+    int x;
+    int y;
 };
 
 struct Board{
-    int A[12][12];
-    int B[12][12];
+    int boards[2][12][12];
     figura ALL[96];
     Board potez(Board old, Move M);
     void listNextMoves(PlayerID player, PlayerID ploca, Board* outBoards, Move* outMoves, size_t maxOutputs) const;
